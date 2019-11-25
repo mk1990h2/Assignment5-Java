@@ -1,7 +1,6 @@
 package ca.ciccc;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 public class ALPriorityQueue<K, V> implements VCPriorityQueue {
     private ArrayList<Entry> priorityQueue;
