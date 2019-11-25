@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class ALPriorityQueue<K, V> implements VCPriorityQueue {
-    ArrayList<Entry> priorityQueue;
+    private ArrayList<Entry> priorityQueue;
 
     public ALPriorityQueue() {
         this.priorityQueue = new ArrayList();
+    }
+
+    public ALPriorityQueue(ArrayList<Entry> priorityQueue) {
+        this.priorityQueue = priorityQueue;
     }
 
     @Override
@@ -38,7 +42,7 @@ public class ALPriorityQueue<K, V> implements VCPriorityQueue {
         Comparable key = priorityQueue.get(0).key;
         int index = 0;
         for (int i = 1; i < priorityQueue.size(); i++) {
-            if (key.compareTo(priorityQueue.get(i).key) < 0) {
+            if (key.compareTo(priorityQueue.get(i).key) > 0) {
                 index = i;
             }
         }
@@ -47,6 +51,9 @@ public class ALPriorityQueue<K, V> implements VCPriorityQueue {
 
     @Override
     public Entry dequeueMin() {
+        if (priorityQueue.isEmpty()) {
+            return null;
+        }
         Entry e = peek();
         priorityQueue.remove(e);
         return e;
@@ -55,7 +62,8 @@ public class ALPriorityQueue<K, V> implements VCPriorityQueue {
     @Override
     public VCPriorityQueue merge(VCPriorityQueue other) {
         ALPriorityQueue al = (ALPriorityQueue) other;
-        priorityQueue.addAll(al.priorityQueue);
-        return this;
+        ArrayList<Entry> newArray = (ArrayList<Entry>) priorityQueue.clone();
+        newArray.addAll(al.priorityQueue);
+        return new ALPriorityQueue(newArray);
     }
 }
